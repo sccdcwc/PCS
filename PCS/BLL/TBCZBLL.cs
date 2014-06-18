@@ -106,23 +106,23 @@ namespace PCS.BLL
                                 if (m == -1)
                                 {
 
-                                    string sql = string.Format("insert into YH_PZB ('YH_GUID','PZMC','PZLX','PZMRZ','PZNRZ','PZGXSJ') values ('{0}','{1}','{2}','{3}','{4}',(select datetime('{5}')))", dt.Rows[i]["YH_GUID"], dt.Rows[i]["PZMC"], dt.Rows[i]["PZLX"], dt.Rows[i]["PZMRZ"], dt.Rows[i]["PZNRZ"], dt.Rows[i]["PZGXSJ"]);
+                                    string sql = string.Format("insert into YH_PZB ('YH_GUID','PZMC','PZLX','PZMRZ','PZNRZ','PZGXSJ') values ('{0}','{1}','{2}','{3}','{4}',(select datetime('{5}')))", dt1.Rows[i]["YH_GUID"], dt1.Rows[i]["PZMC"], dt1.Rows[i]["PZLX"], dt1.Rows[i]["PZMRZ"], dt1.Rows[i]["PZNRZ"], dt1.Rows[i]["PZGXSJ"]);
                                     sqlite.ExecuteSql(sql);
                                 }
                                 else
                                 {
-                                    bool bTime = CompareTime(dt.Rows[i]["PZGXSJ"].ToString(), dt1.Rows[m]["PZGXSJ"].ToString());
+                                    bool bTime = CompareTime(dt.Rows[m]["PZGXSJ"].ToString(), dt1.Rows[i]["PZGXSJ"].ToString());
                                     if (bTime)
                                     {
                                         //服务器配置时间比本地新
                                         string stime = sqlite.ChangeTime(Convert.ToDateTime(dt1.Rows[m]["PZGXSJ"]));
-                                        string sUpdateSql1 = string.Format("update YH_PZB set PZNRZ='{0}',PZGXSJ=(select datetime('{1}')) where YH_GUID='{2}' and PZMC='{3}'", dt1.Rows[m]["PZNRZ"], stime, user.YH_GUID, PzMc);
+                                        string sUpdateSql1 = string.Format("update YH_PZB set PZNRZ='{0}',PZGXSJ=(select datetime('{1}')) where YH_GUID='{2}' and PZMC='{3}'", dt1.Rows[i]["PZNRZ"], stime, user.YH_GUID, PzMc);
                                         sqlite.ExecuteSql(sUpdateSql1);
                                     }
                                     else
                                     {
                                         //本地配置时间比服务器新
-                                        string sUpdateSql2 = string.Format("update YH_PZB set PZNRZ='{0}',PZGXSJ=to_date('{1}','YYYY-MM-DD HH24:MI:SS') where YH_GUID='{2}' and PZMC='{3}'", dt.Rows[i]["PZNRZ"], sqlite.ChangeTime(Convert.ToDateTime(dt.Rows[i]["PZGXSJ"])), user.YH_GUID, PzMc);
+                                        string sUpdateSql2 = string.Format("update YH_PZB set PZNRZ='{0}',PZGXSJ=to_date('{1}','YYYY-MM-DD HH24:MI:SS') where YH_GUID='{2}' and PZMC='{3}'", dt.Rows[m]["PZNRZ"], sqlite.ChangeTime(Convert.ToDateTime(dt.Rows[m]["PZGXSJ"])), user.YH_GUID, PzMc);
                                         TBclient.ExcuteSql(sUpdateSql2);
                                     }
                                 }
@@ -349,7 +349,7 @@ namespace PCS.BLL
                         try
                         {
                             DateTime time = Convert.ToDateTime(dt1.Rows[i]["GXSJ"]);
-                            string sSql1 = string.Format("insert into YH_BDWJ ('YHZY_ID','YH_GUID','YZML','RTYPE','ZYLYFS','JMFS','MD5','WJJWLDZ','TITLE','FORMAT_LIST','WJDXDW','SUBJECT','GRADE_LIST','VERSION','USAGE_TYPE','GXSJ') values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}',(select datetime('{15}')))", dt1.Rows[i]["YHZY_ID"].ToString(), dt1.Rows[i]["YH_GUID"].ToString(), dt1.Rows[i]["YZML"].ToString(), dt1.Rows[i]["RTYPE"].ToString(), dt1.Rows[i]["ZYLYFS"].ToString(), "false", dt1.Rows[i]["MD5"].ToString(), dt1.Rows[i]["WJJWLDZ"].ToString(), dt1.Rows[i]["TITLE"].ToString(), dt1.Rows[i]["FORMAT_LIST"].ToString(), dt1.Rows[i]["WJDXDW"].ToString(), dt1.Rows[i]["SUBJECT"].ToString(), dt1.Rows[i]["GRADE_LIST"].ToString(), dt1.Rows[i]["VERSION"].ToString(), dt1.Rows[i]["USAGE_TYPE"].ToString(), sqlite.ChangeTime(time));
+                            string sSql1 = string.Format("insert into YH_BDWJ ('YHZY_ID','YH_GUID','YZML','RTYPE','ZYLYFS','JMFS','MD5','WJJWLDZ','TITLE','FORMAT_LIST','WJDXDW','SUBJECT','GRADE_LIST','VERSION','USAGE_TYPE','GXSJ','BQMLMC') values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}',(select datetime('{15}')),'{16}')", dt1.Rows[i]["YHZY_ID"].ToString(), dt1.Rows[i]["YH_GUID"].ToString(), dt1.Rows[i]["YZML"].ToString(), dt1.Rows[i]["RTYPE"].ToString(), dt1.Rows[i]["ZYLYFS"].ToString(), "false", dt1.Rows[i]["MD5"].ToString(), dt1.Rows[i]["WJJWLDZ"].ToString(), dt1.Rows[i]["TITLE"].ToString(), dt1.Rows[i]["FORMAT_LIST"].ToString(), dt1.Rows[i]["WJDXDW"].ToString(), dt1.Rows[i]["SUBJECT"].ToString(), dt1.Rows[i]["GRADE_LIST"].ToString(), dt1.Rows[i]["VERSION"].ToString(), dt1.Rows[i]["USAGE_TYPE"].ToString(), sqlite.ChangeTime(time),dt1.Rows[i]["BQMLMC"]);
                             sqlite.ExecuteSql(sSql1);
                         }
                         catch (Exception ex)
@@ -404,25 +404,25 @@ namespace PCS.BLL
                 for (int l = 0; l < dt2.Rows.Count; l++)
                 {
                     //查询本地是否存在基础目录信息
-                    string sSql3 = string.Format("select * from YH_BDML where YH_ML_ID='{0}'", dt2.Rows[l]["YH_ML_ID"]);
+                    string sSql3 = string.Format("select * from YH_BDML where ML_ID='{0}'", dt2.Rows[l]["ML_ID"]);
                     if (!sqlite.IsHaveInSqlite(sSql3))
                     {
                         //若不存在则插入基础目录信息至本地数据库
-                        string sSql4 = string.Format("insert into YH_BDML ('YH_ML_ID','FJMLID','FJMLBM','SFYZML','MLBM','MLBTMC','QYZT','PXH') values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')",dt2.Rows[i]["YH_ML_ID"].ToString(),dt2.Rows[i]["FJMLID"].ToString(), dt2.Rows[l]["FJMLBM"].ToString(), dt2.Rows[l]["SFYZML"].ToString(), dt2.Rows[l]["MLBM"].ToString(), dt2.Rows[l]["MLBTMC"].ToString(), dt2.Rows[l]["QYZT"].ToString(), dt2.Rows[l]["PXH"].ToString(), dt2.Rows[i]["MLBTMCQC"]);
+                        string sSql4 = string.Format("insert into YH_BDML ('ML_ID','FJMLID','FJMLBM','SFYZML','MLBM','MLBTMC','QYZT','PXH') values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')",dt2.Rows[l]["ML_ID"].ToString(),dt2.Rows[l]["FJMLID"].ToString(), dt2.Rows[l]["FJMLBM"].ToString(), dt2.Rows[l]["SFYZML"].ToString(), dt2.Rows[l]["MLBM"].ToString(), dt2.Rows[l]["MLBTMC"].ToString(), dt2.Rows[l]["QYZT"].ToString(), dt2.Rows[l]["PXH"].ToString(), dt2.Rows[l]["MLBTMCQC"]);
                         sqlite.ExecuteSql(sSql4);
                     }
                     //查询本地数据库是否存在基础目录的子目录信息
-                    string sSql5 = string.Format("select * from YH_BDML where FJMLID='{0}'", dt2.Rows[l]["FJMLID"]);
+                    string sSql5 = string.Format("select * from YH_BDML where FJMLID='{0}'", dt2.Rows[l]["ML_ID"]);
                     if (!sqlite.IsHaveInSqlite(sSql5))
                     {
                         //若不存在则查询网络端基础目录子目录信息
-                        string sSql6 = string.Format("select * from jc_ml where FJMLID='{0}'", dt2.Rows[l]["YH_ML_ID"]);
+                        string sSql6 = string.Format("select * from jc_ml where FJMLID='{0}'", dt2.Rows[l]["ML_ID"]);
                         stream = client.GetTable(sSql6);
                         DataTable dt3 = cs.DeSerializeBinary(stream) as DataTable;
                         for (int m = 0; m < dt3.Rows.Count; m++)
                         {
                             //插入基础目录子目录信息至本地数据库
-                            string sSql7 = string.Format("insert into YH_BDML (('YH_ML_ID','FJMLID','FJMLBM','SFYZML','MLBM','MLBTMC','QYZT','PXH') values ('{0}','{1}','{2}','{3}','{4}','{5}'','{6}','{7}')",dt3.Rows[m]["YH_ML_ID"],dt3.Rows[i]["FJMLID"], dt3.Rows[m]["FJMLBM"].ToString(), dt3.Rows[m]["SFYZML"].ToString(), dt3.Rows[m]["MLBM"].ToString(), dt3.Rows[m]["MLBTMC"].ToString(), dt3.Rows[m]["QYZT"].ToString(), dt3.Rows[m]["PXH"].ToString(), dt3.Rows[m]["MLBTMCQC"]);
+                            string sSql7 = string.Format("insert into YH_BDML ('ML_ID','FJMLID','FJMLBM','SFYZML','MLBM','MLBTMC','QYZT','PXH') values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')",dt3.Rows[m]["ML_ID"],dt3.Rows[m]["FJMLID"], dt3.Rows[m]["FJMLBM"].ToString(), dt3.Rows[m]["SFYZML"].ToString(), dt3.Rows[m]["MLBM"].ToString(), dt3.Rows[m]["MLBTMC"].ToString(), dt3.Rows[m]["QYZT"].ToString(), dt3.Rows[m]["PXH"].ToString(), dt3.Rows[m]["MLBTMCQC"]);
                             sqlite.ExecuteSql(sSql7);
                         }
                     }
@@ -445,85 +445,115 @@ namespace PCS.BLL
                 //获取更新时间在本地同步时间之后的文件夹信息
                 string sSql2 = string.Format("select * from yh_bdml where yh_guid='{0}' and GXSJ>datetime('{1}')", user.YH_GUID, sqlite.ChangeTime(Convert.ToDateTime(time)));
                 DataTable dt2 = sqlite.GetTable(sSql2);
-                for (int i = 0; i < dt2.Rows.Count; i++)
+                if (dt2.Rows.Count > 0)
                 {
-                    //获取该条消息在服务端的信息
-                    string sSql3 = string.Format("select * from yh_ml where yh_guid={0} and yh_ml_id='{1}'", user.YH_GUID, dt2.Rows[i]["YH_ML_ID"]);
-                    MemoryStream stream = new MemoryStream();
-                    stream = client.GetTable(sSql3);
-                    DataTable dt3 = cs.DeSerializeBinary(stream) as DataTable;
-                    if (dt3.Rows.Count > 0)
+                    for (int i = 0; i < dt2.Rows.Count; i++)
                     {
-                        DateTime WLtime = Convert.ToDateTime(dt3.Rows[0]["GXSJ"]);
-                        DateTime BDtime = Convert.ToDateTime(dt2.Rows[i]["GXSJ"]);
-                        if (WLtime > BDtime)
+                        //获取该条消息在服务端的信息
+                        string sSql3 = string.Format("select * from yh_ml where yh_guid={0} and ml_id='{1}'", user.YH_GUID, dt2.Rows[i]["ML_ID"]);
+                        MemoryStream stream = new MemoryStream();
+                        stream = client.GetTable(sSql3);
+                        DataTable dt3 = cs.DeSerializeBinary(stream) as DataTable;
+                        if (dt3.Rows.Count > 0)
                         {
-                            string sUpdateSql1 = string.Format("update YH_BDML set FJMLBM='{0}',MLBTMC='{1}',SFYZML='{2}',QYZT='{3}',GXSJ=(select datetime('{4}')),BZ='{5}' where YH_GUID='{6}' and YH_ML_ID='{7}'", dt3.Rows[0]["FJMLBM"].ToString(), dt3.Rows[0]["MLBTMC"].ToString(), dt3.Rows[0]["SFYZML"].ToString(), dt3.Rows[0]["QYZT"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt3.Rows[0]["GXSJ"])), dt3.Rows[0]["BZ"].ToString(), user.YH_GUID, dt3.Rows[0]["YH_ML_ID"]);
-                            sqlite.ExecuteSql(sUpdateSql1);
+                            DateTime WLtime = Convert.ToDateTime(dt3.Rows[0]["GXSJ"]);
+                            DateTime BDtime = Convert.ToDateTime(dt2.Rows[i]["GXSJ"]);
+                            if (WLtime > BDtime)
+                            {
+                                string sUpdateSql1 = string.Format("update YH_BDML set FJMLBM='{0}',MLBTMC='{1}',SFYZML='{2}',QYZT='{3}',GXSJ=(select datetime('{4}')),BZ='{5}',MLBTMCQC='{6}' where YH_GUID='{7}' and ML_ID='{8}'", dt3.Rows[0]["FJMLBM"].ToString(), dt3.Rows[0]["MLBTMC"].ToString(), dt3.Rows[0]["SFYZML"].ToString(), dt3.Rows[0]["QYZT"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt3.Rows[0]["GXSJ"])), dt3.Rows[0]["BZ"].ToString(),dt3.Rows[0]["MLBTMCQC"], user.YH_GUID, dt3.Rows[0]["ML_ID"]);
+                                sqlite.ExecuteSql(sUpdateSql1);
+                            }
+                            else
+                            {
+                                //本地文件目录更新时间比服务器新
+                                string sUpdateSql2 = string.Format("update YH_ML set MLBTMC='{1}',SFYZML='{2}',QYZT='{3}',GXSJ=to_date('{4}','YYYY-MM-DD HH24:MI:SS'),BZ='{5}',MLBTMCQC='{6}' where YH_GUID='{7}' and ML_ID='{8}'", dt2.Rows[i]["FJMLBM"].ToString(), dt2.Rows[i]["MLBTMC"].ToString(), dt2.Rows[i]["SFYZML"].ToString(), dt2.Rows[i]["QYZT"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["GXSJ"])), dt2.Rows[i]["BZ"].ToString(),dt2.Rows[i]["MLBTMCQC"], user.YH_GUID, dt2.Rows[i]["ML_ID"]); ;
+                                client.ExcuteSql(sUpdateSql2);
+                            }
                         }
                         else
                         {
-                            //本地文件目录更新时间比服务器新
-                            string sUpdateSql2 = string.Format("update YH_ML set MLBTMC='{1}',SFYZML='{2}',QYZT='{3}',GXSJ=to_date('{4}','YYYY-MM-DD HH24:MI:SS'),BZ='{5}' where YH_GUID='{6}' and YH_ML_ID='{7}'", dt2.Rows[i]["FJMLBM"].ToString(), dt2.Rows[i]["MLBTMC"].ToString(), dt2.Rows[i]["SFYZML"].ToString(), dt2.Rows[i]["QYZT"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["GXSJ"])), dt2.Rows[i]["BZ"].ToString(), user.YH_GUID, dt2.Rows[i]["YH_ML_ID"]); ;
-                            client.ExcuteSql(sUpdateSql2);
+                            string sInsertSql = string.Format("insert into YH_ML (YH_GUID,FJMLBM,SFYZML,MLBM,MLBTMC,CJSJ,GXSJ,QYZT,PXH,BZ,ML_ID,FJMLID) values ('{0}','{1}','{2}','{3}','{4}',to_date('{5}','YYYY-MM-DD HH24:MI:SS'),to_date('{6}','YYYY-MM-DD HH24:MI:SS'),'{7}','{8}','{9}','{10}','{11}')", dt2.Rows[i]["YH_GUID"].ToString(), dt2.Rows[i]["FJMLBM"].ToString(), dt2.Rows[i]["SFYZML"].ToString(), dt2.Rows[i]["MLBM"].ToString(), dt2.Rows[i]["MLBTMC"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["CJSJ"])), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["GXSJ"])), dt2.Rows[i]["QYZT"].ToString(), dt2.Rows[i]["PXH"].ToString(), dt2.Rows[i]["BZ"].ToString(), dt2.Rows[i]["ML_ID"].ToString(), dt2.Rows[i]["FJMLID"].ToString());
+                            client.ExcuteSql(sInsertSql);
                         }
                     }
-                    else
+                    sSql2 = string.Format("select * from yh_ml where yh_guid='{0}' and GXSJ>'{1}'", user.YH_GUID, time);
+                    MemoryStream stream2 = new MemoryStream();
+                    stream2 = client.GetTable(sSql2);
+                    dt2 = cs.DeSerializeBinary(stream2) as DataTable;
+                    for (int i = 0; i < dt2.Rows.Count; i++)
                     {
-                        string sInsertSql = string.Format("insert into YH_ML (YH_GUID,FJMLBM,SFYZML,MLBM,MLBTMC,CJSJ,GXSJ,QYZT,PXH,BZ,YH_ML_ID,FJMLID) values ('{0}','{1}','{2}','{3}','{4}',to_date('{5}','YYYY-MM-DD HH24:MI:SS'),to_date('{6}','YYYY-MM-DD HH24:MI:SS'),'{7}','{8}','{9}','{10}','{11}')", dt2.Rows[i]["YH_GUID"].ToString(), dt2.Rows[i]["FJMLBM"].ToString(), dt2.Rows[i]["SFYZML"].ToString(), dt2.Rows[i]["MLBM"].ToString(), dt2.Rows[i]["MLBTMC"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["CJSJ"])), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["GXSJ"])), dt2.Rows[i]["QYZT"].ToString(), dt2.Rows[i]["PXH"].ToString(), dt2.Rows[i]["BZ"].ToString(), dt2.Rows[i]["YH_ML_ID"].ToString(),dt2.Rows[i]["FJMLID"].ToString());
-                        client.ExcuteSql(sInsertSql);
+                        //获取该条消息在本地端的信息
+                        string sSql3 = string.Format("select * from yh_bdml where yh_guid={0} and ml_id='{1}'", user.YH_GUID, dt2.Rows[i]["ml_id"]);
+                        DataTable dt3 = sqlite.GetTable(sSql3);
+                        if (dt3.Rows.Count > 0)
+                        {
+                            DateTime WLtime = Convert.ToDateTime(dt2.Rows[0]["GXSJ"]);
+                            DateTime BDtime = Convert.ToDateTime(dt3.Rows[i]["GXSJ"]);
+                            if (WLtime > BDtime)
+                            {
+                                string sUpdateSql1 = string.Format("update YH_BDML set FJMLBM='{0}',MLBTMC='{1}',SFYZML='{2}',QYZT='{3}',GXSJ=(select datetime('{4}')),BZ='{5}' where YH_GUID='{6}' and ml_id='{7}'", dt2.Rows[i]["FJMLBM"].ToString(), dt2.Rows[i]["MLBTMC"].ToString(), dt2.Rows[i]["SFYZML"].ToString(), dt2.Rows[i]["QYZT"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["GXSJ"])), dt2.Rows[i]["BZ"].ToString(), user.YH_GUID, dt2.Rows[i]["ml_id"]);
+                                sqlite.ExecuteSql(sUpdateSql1);
+                            }
+                            else
+                            {
+                                //本地文件目录更新时间比服务器新
+                                string sUpdateSql2 = string.Format("update YH_ML set FJMLBM='{0}',MLBTMC='{1}',SFYZML='{2}',QYZT='{3}',GXSJ=to_date('{4}','YYYY-MM-DD HH24:MI:SS'),BZ='{5}' where YH_GUID='{6}' and ml_id='{7}'", dt3.Rows[0]["FJMLBM"].ToString(), dt3.Rows[0]["MLBTMC"].ToString(), dt3.Rows[0]["SFYZML"].ToString(), dt3.Rows[0]["QYZT"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt3.Rows[0]["GXSJ"])), dt3.Rows[0]["BZ"].ToString(), user.YH_GUID, dt3.Rows[0]["ml_id"]); ;
+                                client.ExcuteSql(sUpdateSql2);
+                            }
+                        }
+                        else
+                        {
+                            string sInsertSql = string.Format("insert into YH_BDML (YH_GUID,FJMLBM,SFYZML,MLBM,MLBTMC,CJSJ,GXSJ,QYZT,PXH,BZ,ML_ID,FJMLID,SFJCMLTQ,JCMLZSDBM,MLBTMCQC) values ('{0}','{1}','{2}','{3}','{4}',datetime('{5}'),datetime('{6}'),'{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}')", dt2.Rows[i]["YH_GUID"].ToString(), dt2.Rows[i]["FJMLBM"].ToString(), dt2.Rows[i]["SFYZML"].ToString(), dt2.Rows[i]["MLBM"].ToString(), dt2.Rows[i]["MLBTMC"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["CJSJ"])), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["GXSJ"])), dt2.Rows[i]["QYZT"].ToString(), dt2.Rows[i]["PXH"].ToString(), dt2.Rows[i]["BZ"].ToString(), dt2.Rows[i]["ML_ID"].ToString(), dt2.Rows[i]["FJMLID"].ToString(), dt2.Rows[i]["SFJCMLTQ"], dt2.Rows[i]["JCMLZSDBM"], dt2.Rows[i]["MLBTMCQC"]);
+                            sqlite.ExecuteSql(sInsertSql);
+                        }
+
                     }
                 }
-                sSql2 = string.Format("select * from yh_ml where yh_guid='{0}' and GXSJ>'{1}'", user.YH_GUID, time);
-                MemoryStream stream2 = new MemoryStream();
-                stream2 = client.GetTable(sSql2);
-                dt2 = cs.DeSerializeBinary(stream2) as DataTable;
-                for (int i = 0; i < dt2.Rows.Count; i++)
+                else
                 {
-                    //获取该条消息在本地端的信息
-                    string sSql3 = string.Format("select * from yh_bdml where yh_guid={0} and yh_ml_id='{1}'", user.YH_GUID, dt2.Rows[i]["yh_ml_id"]);
-                    DataTable dt3 = sqlite.GetTable(sSql3);
-                    if (dt3.Rows.Count > 0)
+                    string sSql4 = string.Format("select * from yh_ml where yh_guid='{0}'", user.YH_GUID);
+                    MemoryStream stream = client.GetTable(sSql4);
+                    DataTable dt1 = cs.DeSerializeBinary(stream) as DataTable;
+                    if (dt1.Rows.Count > 0)
                     {
-                        DateTime WLtime = Convert.ToDateTime(dt2.Rows[0]["GXSJ"]);
-                        DateTime BDtime = Convert.ToDateTime(dt3.Rows[i]["GXSJ"]);
-                        if (WLtime > BDtime)
+                        for (int i = 0; i < dt1.Rows.Count; i++)
                         {
-                            string sUpdateSql1 = string.Format("update YH_BDML set FJMLBM='{0}',MLBTMC='{1}',SFYZML='{2}',QYZT='{3}',GXSJ=(select datetime('{4}')),BZ='{5}' where YH_GUID='{6}' and yh_ml_id='{7}'", dt3.Rows[0]["FJMLBM"].ToString(), dt3.Rows[0]["MLBTMC"].ToString(), dt3.Rows[0]["SFYZML"].ToString(), dt3.Rows[0]["QYZT"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt3.Rows[0]["GXSJ"])), dt3.Rows[0]["BZ"].ToString(), user.YH_GUID, dt3.Rows[0]["yh_ml_id"]);
-                            sqlite.ExecuteSql(sUpdateSql1);
+                            string sInsertSql = string.Format("insert into YH_BDML (YH_GUID,FJMLBM,SFYZML,MLBM,MLBTMC,CJSJ,GXSJ,QYZT,PXH,BZ,ML_ID,FJMLID,SFJCMLTQ,JCMLZSDBM,MLBTMCQC) values ('{0}','{1}','{2}','{3}','{4}',datetime('{5}'),datetime('{6}'),'{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}')", dt1.Rows[i]["YH_GUID"].ToString(), dt1.Rows[i]["FJMLBM"].ToString(), dt1.Rows[i]["SFYZML"].ToString(), dt1.Rows[i]["MLBM"].ToString(), dt1.Rows[i]["MLBTMC"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt1.Rows[i]["CJSJ"])), sqlite.ChangeTime(Convert.ToDateTime(dt1.Rows[i]["GXSJ"])), dt1.Rows[i]["QYZT"].ToString(), dt1.Rows[i]["PXH"].ToString(), dt1.Rows[i]["BZ"].ToString(), dt1.Rows[i]["ML_ID"].ToString(), dt1.Rows[i]["FJMLID"].ToString(),dt1.Rows[i]["SFJCMLTQ"],dt1.Rows[i]["JCMLZSDBM"],dt1.Rows[i]["MLBTMCQC"]);
+                            sqlite.ExecuteSql(sInsertSql);
                         }
-                        else
-                        {
-                            //本地文件目录更新时间比服务器新
-                            string sUpdateSql2 = string.Format("update YH_ML set FJMLBM='{0}',MLBTMC='{1}',SFYZML='{2}',QYZT='{3}',GXSJ=to_date('{4}','YYYY-MM-DD HH24:MI:SS'),BZ='{5}' where YH_GUID='{6}' and yh_ml_id='{7}'", dt2.Rows[i]["FJMLBM"].ToString(), dt2.Rows[i]["MLBTMC"].ToString(), dt2.Rows[i]["SFYZML"].ToString(), dt2.Rows[i]["QYZT"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["GXSJ"])), dt2.Rows[i]["BZ"].ToString(), user.YH_GUID, dt2.Rows[i]["yh_ml_id"]); ;
-                            client.ExcuteSql(sUpdateSql2);
-                        }
+                    }
+                   
+                    if (sqlite.IsHaveInSqlite(string.Format("select * from yh_pzb where pzmc='同步时间' and yh_guid='{0}'",user.YH_GUID)))
+                    {
+                        string sSql3 = string.Format("update yh_pzb set pznrz=datetime('now','localtime') where pzmc='同步时间' and yh_guid='{0}'", user.YH_GUID);
+                        sqlite.ExecuteSql(sSql3);
                     }
                     else
-                    {
-                        string sInsertSql = string.Format("insert into YH_ML (YH_GUID,FJMLBM,SFYZML,MLBM,MLBTMC,CJSJ,GXSJ,QYZT,PXH,BZ) values ('{0}','{1}','{2}','{3}','{4}',to_date('{5}','YYYY-MM-DD HH24:MI:SS'),to_date('{6}','YYYY-MM-DD HH24:MI:SS'),'{7}','{8}','{9}')", dt2.Rows[i]["YH_GUID"].ToString(), dt2.Rows[i]["FJMLID"].ToString(), dt2.Rows[i]["SFYZML"].ToString(), dt2.Rows[i]["MLBM"].ToString(), dt2.Rows[i]["MLBTMC"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["CJSJ"])), sqlite.ChangeTime(Convert.ToDateTime(dt2.Rows[i]["GXSJ"])), dt2.Rows[i]["QYZT"].ToString(), dt2.Rows[i]["PXH"].ToString(), dt2.Rows[i]["BZ"].ToString());
-                        sqlite.ExecuteSql(sInsertSql);
+                    { 
+                        string sSql3 = string.Format("insert into YH_PZB ('YH_GUID','PZMC','PZLX','PZMRZ','PZNRZ','PZGXSJ') values ('{0}','同步时间','同步配置','',(select datetiem('now','localtime')),(select datetiem('now','localtime')))", user.YH_GUID);
+                        sqlite.ExecuteSql(sSql3);
                     }
-
+                    
+                    AddJCML(user);
                 }
             }
             else
             {
-                //若本地没有同步时间，及本地无文件目录信息，因此插入文件目录信息
-                string sSql2 = string.Format("select * from yh_ml where yh_guid='{0}'", user.YH_GUID);
-                MemoryStream stream = client.GetTable(sSql2);
-                DataTable dt1 = cs.DeSerializeBinary(stream) as DataTable;
-                if (dt1.Rows.Count > 0)
-                {
-                    for (int i = 0; i < dt1.Rows.Count;i++)
-                    {
-                        string sInsertSql = string.Format("insert into YH_ML (YH_GUID,FJMLBM,SFYZML,MLBM,MLBTMC,CJSJ,GXSJ,QYZT,PXH,BZ,YH_ML_ID,FJMLID) values ('{0}','{1}','{2}','{3}','{4}',to_date('{5}','YYYY-MM-DD HH24:MI:SS'),to_date('{6}','YYYY-MM-DD HH24:MI:SS'),'{7}','{8}','{9}','{10}','{11}')", dt1.Rows[i]["YH_GUID"].ToString(), dt1.Rows[i]["FJMLID"].ToString(), dt1.Rows[i]["SFYZML"].ToString(), dt1.Rows[i]["MLBM"].ToString(), dt1.Rows[i]["MLBTMC"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt1.Rows[i]["CJSJ"])), sqlite.ChangeTime(Convert.ToDateTime(dt1.Rows[i]["GXSJ"])), dt1.Rows[i]["QYZT"].ToString(), dt1.Rows[i]["PXH"].ToString(), dt1.Rows[i]["BZ"].ToString(),dt1.Rows[i]["YH_ML_ID"].ToString(),dt1.Rows[i]["FJMLID"].ToString());
-                        sqlite.ExecuteSql(sInsertSql);                  
-                    }
-                }
-                string sSql3 = string.Format("insert into YH_PZB ('YH_GUID','PZMC','PZLX','PZMRZ','PZNRZ','PZGXSJ') values ('{0}','同步时间','同步配置','',(select datetiem('now','localtime')),(select datetiem('now','localtime')))",user.YH_GUID);
-                sqlite.ExecuteSql(sSql3);
-                AddJCML(user);
+                ////若本地没有同步时间，及本地无文件目录信息，因此插入文件目录信息
+                //string sSql2 = string.Format("select * from yh_ml where yh_guid='{0}'", user.YH_GUID);
+                //MemoryStream stream = client.GetTable(sSql2);
+                //DataTable dt1 = cs.DeSerializeBinary(stream) as DataTable;
+                //if (dt1.Rows.Count > 0)
+                //{
+                //    for (int i = 0; i < dt1.Rows.Count;i++)
+                //    {
+                //        string sInsertSql = string.Format("insert into YH_BDML (YH_GUID,FJMLBM,SFYZML,MLBM,MLBTMC,CJSJ,GXSJ,QYZT,PXH,BZ,ML_ID,FJMLID,SFJCMLTQ,JCMLZSDBM) values ('{0}','{1}','{2}','{3}','{4}',datetime('{5}'),datetime('{6}'),'{7}','{8}','{9}','{10}','{11}','{12}','{13}')", dt1.Rows[i]["YH_GUID"].ToString(), dt1.Rows[i]["FJMLBM"].ToString(), dt1.Rows[i]["SFYZML"].ToString(), dt1.Rows[i]["MLBM"].ToString(), dt1.Rows[i]["MLBTMC"].ToString(), sqlite.ChangeTime(Convert.ToDateTime(dt1.Rows[i]["CJSJ"])), sqlite.ChangeTime(Convert.ToDateTime(dt1.Rows[i]["GXSJ"])), dt1.Rows[i]["QYZT"].ToString(), dt1.Rows[i]["PXH"].ToString(), dt1.Rows[i]["BZ"].ToString(), dt1.Rows[i]["ML_ID"].ToString(), dt1.Rows[i]["FJMLID"].ToString(), dt1.Rows[i]["SFJCMLTQ"], dt1.Rows[i]["JCMLZSDBM"]);
+                //        sqlite.ExecuteSql(sInsertSql);         
+                //    }
+                //}
+                //string sSql3 = string.Format("insert into YH_PZB ('YH_GUID','PZMC','PZLX','PZMRZ','PZNRZ','PZGXSJ') values ('{0}','同步时间','同步配置','',(select datetiem('now','localtime')),(select datetiem('now','localtime')))",user.YH_GUID);
+                //sqlite.ExecuteSql(sSql3);
+                //AddJCML(user);
             }
 
         }

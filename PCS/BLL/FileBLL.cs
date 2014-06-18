@@ -61,17 +61,31 @@ namespace PCS.BLL
             if (Node != null)
             {
                 DataTable dt = new DataTable();
-                string sSql = string.Format("select * from yh_bdwj where yh_guid='{0}' and yzml='{1}' order by yhzy_id", yh_guid, Node.ID);
+                string sSql = string.Format("select * from yh_bdml where yh_guid='{0}' and ml_id='{1}'", yh_guid, Node.ID);
                 dt = sqlite.GetTable(sSql);
-                Files = WriteFileInfo(dt);
-                FileList = FileList.Union(Files).ToList<FileInfomation>();
-                if (Node.Nodes != null)
+                if (dt.Rows.Count > 0)
                 {
-                    for (int i = 0; i < Node.Nodes.Count; i++)
+                    string sMlbtqc = dt.Rows[0]["MLBTMCQC"].ToString();
+                    List<string> MLMCArray = FJMLBTQC(sMlbtqc);
+                    string sSql1 = string.Format("select * from yh_bdwj where BQMLMC like '%-1%'");
+                    for (int i = 0; i < MLMCArray.Count; i++)
                     {
-                        Files = GetFileInfo(Node.Nodes[i], yh_guid);
-                        FileList = FileList.Union(Files).ToList<FileInfomation>();
+                        if (MLMCArray[i] == "课程目录")
+                            sSql1 = sSql1 + " and YZML>'100000' and yzml<'200000'";
+                        else
+                            sSql1 = sSql1 + string.Format(" and BQMLMC like '%{0}%'", MLMCArray[i]);
                     }
+                    DataTable dt1 = sqlite.GetTable(sSql1);
+                    Files = WriteFileInfo(dt1);
+                    FileList = FileList.Union(Files).ToList<FileInfomation>();
+                    //if (Node.Nodes != null)
+                    //{
+                    //    for (int i = 0; i < Node.Nodes.Count; i++)
+                    //    {
+                    //        Files = GetFileInfo(Node.Nodes[i], yh_guid);
+                    //        FileList = FileList.Union(Files).ToList<FileInfomation>();
+                    //    }
+                    //}
                 }
             }
             return FileList;
@@ -147,5 +161,34 @@ namespace PCS.BLL
             }
             return fileslist;
         }
+        /// <summary>
+        /// 分解目录标题名称全称
+        /// </summary>
+        /// <param name="MLBTQC"></param>
+        /// <returns></returns>
+        public List<string> FJMLBTQC(string MLBTQC)
+        {
+            char[] Array = MLBTQC.Trim().ToArray();
+            int i = 0;
+            List<string> BTMC = new List<string>();
+            string temp = string.Empty;
+            foreach (char a in Array)
+            {
+
+                if (a != '/')
+                {
+                    temp = temp + a;
+                }
+                else
+                {
+                    BTMC.Add(temp);
+                    temp = string.Empty;
+                }
+            }
+            BTMC.Add(temp);
+            return BTMC;
+        }
     }
+
+
 }

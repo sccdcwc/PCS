@@ -22,11 +22,11 @@ namespace PCS.BLL
                 {
                     NodeModel Node = new NodeModel();
                     Node.NodeName = dt.Rows[i]["MLBTMC"].ToString().Replace("（","(").Replace("）",")");
-                    Node.ID = dt.Rows[i]["YH_ML_ID"].ToString();
+                    Node.ID = dt.Rows[i]["ML_ID"].ToString();
                     Node.FJID = dt.Rows[i]["FJMLID"].ToString();
                     Node.changetime = dt.Rows[i]["GXSJ"].ToString();
                     DataTable zdt = new DataTable();
-                    string sSql = string.Format("select * from yh_bdml where FJMLID='{0}' and yh_guid='{1}' and qyzt='1' order by YH_ML_ID", dt.Rows[i]["YH_ML_ID"], dt.Rows[i]["YH_GUID"]);
+                    string sSql = string.Format("select * from yh_bdml where FJMLID='{0}' and yh_guid='{1}' and qyzt='1' order by ML_ID", dt.Rows[i]["ML_ID"], dt.Rows[i]["YH_GUID"]);
                     zdt = sqlite.GetTable(sSql);
                     if (zdt.Rows.Count > 0)
                     {
@@ -43,7 +43,7 @@ namespace PCS.BLL
                         }
                         else
                         {
-                            string sSql1 = string.Format("select * from yh_bdml where FJMLBM='{0}' order by MLBM", dt.Rows[i]["MLBM"]);
+                            string sSql1 = string.Format("select * from yh_bdml where FJMLID='{0}' order by ML_ID", dt.Rows[i]["ML_ID"]);
                             DataTable dt1 = sqlite.GetTable(sSql1);
                             Node.Nodes = WriteNode(dt1);
                         }
@@ -82,14 +82,14 @@ namespace PCS.BLL
 
         public NodeModel GetFatherNode(NodeModel Node, UserModel user)
         {
-            string sql = string.Format("select * from yh_bdml where yh_guid='{0}' and MLBM='{1}'", user.YH_GUID, Node.FJID);
+            string sql = string.Format("select * from yh_bdml where yh_guid='{0}' and ML_ID='{1}'", user.YH_GUID, Node.FJID);
             DataTable dt = sqlite.GetTable(sql);
             NodeModel NewNode = new NodeModel();
             if (dt.Rows.Count > 0)
             {
                 NewNode.NodeName = dt.Rows[0]["MLBTMC"].ToString();
-                NewNode.ID = dt.Rows[0]["MLBM"].ToString();
-                NewNode.FJID = dt.Rows[0]["FJMLBM"].ToString();
+                NewNode.ID = dt.Rows[0]["ML_ID"].ToString();
+                NewNode.FJID = dt.Rows[0]["FJMLID"].ToString();
                 NewNode.changetime = dt.Rows[0]["GXSJ"].ToString();
             }
             else

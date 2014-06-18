@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\百度云同步盘\项目\PCS\PCS\obj\Debug\
+E:\GitHub\PCS\PCS\obj\Debug\
 PCS
 none
 false
 DEBUG;TRACE
-D:\百度云同步盘\项目\PCS\PCS\App.xaml
-41843657088
+E:\GitHub\PCS\PCS\App.xaml
+5-260577265
 
-22-310465728
-19-1587921706
-AddFolder.xaml;CourseManager.xaml;Login.xaml;ReName.xaml;
+23-58171462
+1980529999
+AddFolder.xaml;AddPZNR.xaml;CourseManager.xaml;Login.xaml;ReName.xaml;
 
-True
+False
 

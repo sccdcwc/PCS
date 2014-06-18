@@ -8,3 +8,8 @@ E:\百度云同步盘\项目\PCS\OracleDB\bin\Debug\OracleDB.pdb
 E:\百度云同步盘\项目\PCS\OracleDB\obj\Debug\OracleDB.dll
 E:\百度云同步盘\项目\PCS\OracleDB\obj\Debug\OracleDB.pdb
 E:\百度云同步盘\项目\PCS\OracleDB\obj\Debug\OracleDB.csprojResolveAssemblyReference.cache
+E:\GitHub\PCS\OracleDB\bin\Debug\OracleDB.dll
+E:\GitHub\PCS\OracleDB\bin\Debug\OracleDB.pdb
+E:\GitHub\PCS\OracleDB\obj\Debug\OracleDB.csprojResolveAssemblyReference.cache
+E:\GitHub\PCS\OracleDB\obj\Debug\OracleDB.dll
+E:\GitHub\PCS\OracleDB\obj\Debug\OracleDB.pdb

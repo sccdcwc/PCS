@@ -30,8 +30,19 @@ namespace PCS
         {
             SQLiteBLL sqlite = new SQLiteBLL();
             string sSql = string.Format("select * from yh_pzb where pzmc='文件夹本地地址' and yh_guid={0}", user.YH_GUID);
+            string sPath = string.Empty;
             DataTable dt = sqlite.GetTable(sSql);
-            string sPath = dt.Rows[0]["PZNRZ"].ToString();
+            if (dt.Rows.Count > 0)
+            {
+                sPath = dt.Rows[0]["PZNRZ"].ToString();
+            }
+            else
+            {
+                AddPZNR addpznr = new AddPZNR();
+                addpznr.user = user;
+                addpznr.ShowDialog();
+            }
+
         }
         /// <summary>
         /// 选择树形节点查看目录下所有文件
@@ -201,7 +212,7 @@ namespace PCS
             SQLiteBLL sqlite = new SQLiteBLL();
             NodeBLL NB = new NodeBLL();
             //添加树形目录数据
-            string sSql = string.Format("select * from yh_bdml where FJMLBM='0' and yh_guid='{0}' order by pxh and mlbm", user.YH_GUID);
+            string sSql = string.Format("select * from yh_bdml where FJMLID='-1' and yh_guid='{0}' order by pxh and mlbm", user.YH_GUID);
             DataTable dt = new DataTable();
             dt = sqlite.GetTable(sSql);
             ObservableCollection<NodeModel> NodeList = NB.WriteNode(dt);

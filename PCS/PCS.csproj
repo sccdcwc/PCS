@@ -62,6 +62,9 @@
     <Compile Include="AddFolder.xaml.cs">
       <DependentUpon>AddFolder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddPZNR.xaml.cs">
+      <DependentUpon>AddPZNR.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BLL\FileBLL.cs" />
     <Compile Include="BLL\LoginBLL.cs" />
     <Compile Include="BLL\NodeBLL.cs" />
@@ -87,6 +90,10 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Page Include="AddFolder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddPZNR.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
