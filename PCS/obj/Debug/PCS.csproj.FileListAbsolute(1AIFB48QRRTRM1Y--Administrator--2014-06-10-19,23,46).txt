@@ -1,0 +1,7 @@
+E:\百度云同步盘\项目\PCS\PCS\obj\Debug\PCS.csprojResolveAssemblyReference.cache
+E:\百度云同步盘\项目\PCS\PCS\obj\Debug\Login.baml
+E:\百度云同步盘\项目\PCS\PCS\obj\Debug\Login.g.cs
+E:\百度云同步盘\项目\PCS\PCS\obj\Debug\App.g.cs
+E:\百度云同步盘\项目\PCS\PCS\obj\Debug\PCS_MarkupCompile.cache
+E:\百度云同步盘\项目\PCS\PCS\obj\Debug\PCS.exe
+E:\百度云同步盘\项目\PCS\PCS\obj\Debug\PCS.pdb

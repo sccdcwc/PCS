@@ -1,0 +1,14 @@
+D:\PCS\LoginService\bin\LoginService.dll
+D:\PCS\LoginService\bin\LoginService.pdb
+D:\PCS\LoginService\bin\OracleDB.dll
+D:\PCS\LoginService\bin\OracleDB.pdb
+D:\PCS\LoginService\obj\Debug\LoginService.csprojResolveAssemblyReference.cache
+D:\PCS\LoginService\obj\Debug\LoginService.dll
+D:\PCS\LoginService\obj\Debug\LoginService.pdb
+E:\百度云同步盘\项目\PCS\LoginService\bin\LoginService.dll
+E:\百度云同步盘\项目\PCS\LoginService\bin\LoginService.pdb
+E:\百度云同步盘\项目\PCS\LoginService\bin\OracleDB.dll
+E:\百度云同步盘\项目\PCS\LoginService\bin\OracleDB.pdb
+E:\百度云同步盘\项目\PCS\LoginService\obj\Debug\LoginService.csprojResolveAssemblyReference.cache
+E:\百度云同步盘\项目\PCS\LoginService\obj\Debug\LoginService.dll
+E:\百度云同步盘\项目\PCS\LoginService\obj\Debug\LoginService.pdb

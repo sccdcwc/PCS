@@ -1,0 +1,7 @@
+配置表插入数据：
+insert into yh_pzb('yh_guid','pzmc','pzlx','pzmrz','pznrz','pzgxsj') values ('999100000226','是否记住密码','登录配置','false','false',(select datetime('now','localtime')))
+查询上次登录用户信息
+select yh.yhdlm,yh.dlmm,pz.pznrz from jc_yh yh join yh_pzb pz on pz.yh_guid=yh.yh_guid where yh.IsLast='true'
+用户表插入数据
+insert into jc_yh values ('999100000226','cdcgq2','E10ADC3949BA59ABBE56E057F20F883E','陈国强','30911','true')
+

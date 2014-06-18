@@ -1,0 +1,10 @@
+﻿<Window x:Class="PCS.AddFolder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AddFolder" Height="232.34" Width="279.574">
+    <Grid>
+        <TextBox Name="MLBTMC" HorizontalAlignment="Left" Height="23" Margin="70,60,0,0" TextWrapping="Wrap" Text="请输入目录名称" VerticalAlignment="Top" Width="120"/>
+        <Button Content="确认" HorizontalAlignment="Left" Margin="90,113,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,47 @@
+﻿<Window x:Class="PCS.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="登录"  Height="300" Width="400"  WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1">
+        <Window.Resources>
+            <Storyboard x:Key="leafMove" RepeatBehavior="Forever">
+                <!--树叶移动-->
+                <DoubleAnimation BeginTime="00:00:00" AutoReverse="True" Duration="00:00:03" From="-15" To="15" Storyboard.TargetProperty="Angle" Storyboard.TargetName="MoveLeaf">
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Key="cloudMove" RepeatBehavior="Forever">
+                <!--白云移动-->
+                <DoubleAnimation BeginTime="00:00:01"  Duration="00:00:15" From="0" To="170" Storyboard.TargetProperty="X" Storyboard.TargetName="MoveCloud" AutoReverse="False" >
+                </DoubleAnimation>
+            </Storyboard>
+        </Window.Resources>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="13*"/>
+            </Grid.RowDefinitions>
+            <Border Background="#FF0D1B55" CornerRadius="30" Margin="0,20,0,19"  Loaded="Border_Loaded_1" MouseLeftButtonDown="Border_MouseLeftButtonDown_1" Grid.RowSpan="2"/>
+            <Image Source="Resource/sun2.png" Grid.Row="0" Margin="-21,-62,291,30.8"/>
+            <Image Source="Resource/yezi2.png" Margin="0,-9,53,18.8" Grid.Row="0"/>
+            <Image Source="Resource/yezi3.png" Margin="75,40,284,18.8">
+                <Image.RenderTransform>
+                    <RotateTransform x:Name="MoveLeaf"></RotateTransform>
+                </Image.RenderTransform>
+            </Image>
+            <Image Source="Resource/cloud.png" Margin="-5,0,232,50.8" >
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform x:Name="MoveCloud"></TranslateTransform>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image Source="resource/close0.png" Height="18"  VerticalAlignment="Top"  MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave" Tag="close" MouseLeftButtonDown="Image_MouseLeftButtonDown" HorizontalAlignment="Left" Width="18" Margin="357,20,0,0"/>
+            <Image Source="resource/mini0.png" Height="18"  VerticalAlignment="Top" RenderTransformOrigin="0.492,-0.127" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave" Tag="mini" MouseLeftButtonDown="Image_MouseLeftButtonDown" Margin="339,20,43,0"/>
+            <Label Content="用户名：" Margin="86,7.2,259,164" Grid.Row="1" Foreground="#FFDFE6EB"></Label>
+            <TextBox  Width="175" HorizontalAlignment="Center" x:Name="UserName" FontWeight="Bold" Background="{x:Null}" BorderBrush="#FFDFE6EB" Foreground="#FFF8F8F8" Margin="146,10.2,79,164" Grid.Row="1" TextChanged="UserName_TextChanged"/>
+            <Label Content="密   码：" Margin="86,49.2,259,122" Grid.Row="1" Foreground="#FFDFE6EB"></Label>
+            <Button  Content="登录" Height="25" Width="70" Margin="169,122.2,161,48" Grid.Row="1" Click="Button_Click_1"/>
+            <CheckBox Name="RemPass" Content="记住密码" Margin="112,87.2,223,92" Foreground="#FFDFE6EB" Grid.Row="1" Background="{x:Null}"  Click="RemPass_Click"/>
+            <CheckBox Name="AutoLog" Content="自动登录" Margin="231,87.2,104,92" Foreground="#FFDFE6EB" Grid.Row="1" Background="{x:Null}" Click="AutoLog_Click"/>
+            <PasswordBox Name="PswdBox" Width="175" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="#FFDFE6EB"  Foreground="#FFF8F8F8" Margin="146,52.2,78,0" Grid.Row="1" VerticalAlignment="Top" MaxLength="8" />
+        </Grid>
+</Window>

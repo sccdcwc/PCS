@@ -1,0 +1,7 @@
+E:\百度云同步盘\项目\PCS\TBService\bin\TBService.dll
+E:\百度云同步盘\项目\PCS\TBService\bin\TBService.pdb
+E:\百度云同步盘\项目\PCS\TBService\bin\OracleDB.dll
+E:\百度云同步盘\项目\PCS\TBService\bin\OracleDB.pdb
+E:\百度云同步盘\项目\PCS\TBService\obj\Debug\TBService.csprojResolveAssemblyReference.cache
+E:\百度云同步盘\项目\PCS\TBService\obj\Debug\TBService.dll
+E:\百度云同步盘\项目\PCS\TBService\obj\Debug\TBService.pdb

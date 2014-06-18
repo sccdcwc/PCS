@@ -1,0 +1,12 @@
+公司oracle操作
+转换后文件
+select fn_GetPersonResourceUrlHead(zy.nrjc_guid,1)||fn_GetPersonResourceUrl(zy.nrjc_guid,1) from yh_zy zy Where yh_guid='999100000226' and sczhzt=13511 -- zy.nrjc_guid='999100309532'
+源文件
+select fn_GetPersonResourceUrl(zy.nrjc_guid,2) from yh_zy zy Where zy.nrjc_guid='999100309532'
+缩略图
+select fn_GetPersonResourceUrl(zy.nrjc_guid,4) from yh_zy zy Where zy.nrjc_guid='999100309532'
+
+来自NR_JC
+
+fn_GetResourceUrl
+Fn_GetResourceUrlHead

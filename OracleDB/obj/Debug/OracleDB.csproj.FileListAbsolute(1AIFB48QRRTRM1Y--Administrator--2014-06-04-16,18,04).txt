@@ -1,0 +1,4 @@
+E:\百度云同步盘\项目\PCS\OracleDB\bin\Debug\OracleDB.dll
+E:\百度云同步盘\项目\PCS\OracleDB\bin\Debug\OracleDB.pdb
+E:\百度云同步盘\项目\PCS\OracleDB\obj\Debug\OracleDB.dll
+E:\百度云同步盘\项目\PCS\OracleDB\obj\Debug\OracleDB.pdb
