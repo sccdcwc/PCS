@@ -101,7 +101,7 @@ namespace PCS
             return source;
         }
         /// <summary>
-        /// 添加文件
+        /// 添加系统目录
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -140,7 +140,7 @@ namespace PCS
             ShowTree(treev);
         }
         /// <summary>
-        /// 重命名
+        /// 编辑目录（重命名）
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -173,7 +173,6 @@ namespace PCS
                 Directory.CreateDirectory(sPath);
                 FB.CreateLocalFolder(NodeList, sPath);
             }
-            test.Content = "";
         }
 
         private void MenuItem_Click_6(object sender, RoutedEventArgs e)
@@ -218,6 +217,22 @@ namespace PCS
             ObservableCollection<NodeModel> NodeList = NB.WriteNode(dt);
             treev.ItemsSource = NodeList;
             return NodeList;
+        }
+        /// <summary>
+        /// checkbox全选
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckBox_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (AllCheck.IsChecked == true)
+            {
+                Listv.SelectAll();
+            }
+            else
+            {
+                Listv.UnselectAll();
+            }
         }
     }
 }

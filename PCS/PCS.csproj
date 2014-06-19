@@ -221,6 +221,24 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\ab_search.gif" />
+    <Resource Include="Resource\code提取码.gif" />
+    <Resource Include="Resource\copyto复制到.gif" />
+    <Resource Include="Resource\decompress解压缩.gif" />
+    <Resource Include="Resource\delete_big.gif" />
+    <Resource Include="Resource\fs_refresh刷新.gif" />
+    <Resource Include="Resource\home根目录.gif" />
+    <Resource Include="Resource\moveto移动到.gif" />
+    <Resource Include="Resource\new_folder新目录.gif" />
+    <Resource Include="Resource\send转发.gif" />
+    <Resource Include="Resource\sharing共享.gif" />
+    <Resource Include="Resource\spic缩略图.gif" />
+    <Resource Include="Resource\t0138317345af137ec6[1].gif" />
+    <Resource Include="Resource\upload上传.gif" />
+    <Resource Include="Resource\up向上.gif" />
+    <Resource Include="Resource\zip压缩.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
