@@ -101,7 +101,7 @@ namespace PCS.BLL
             string sTempPath = sPath;
             for (int i = 0; i < Folders.Count; i++)
             {
-                sTempPath = sPath + "//" + Folders[i].NodeName;
+                sTempPath = sPath + "/" + Folders[i].NodeName;
                 if (!Directory.Exists(sTempPath))
                 {
                     Directory.CreateDirectory(sTempPath);
@@ -123,13 +123,13 @@ namespace PCS.BLL
             NodeModel NewNode = NB.GetFatherNode(Node, user);
             if (Node != null)
             {
-                if (Node.FJID == "0")
+                if (Node.FJID == "-1")
                 {
-                    sPath = Node.NodeName + "//" + sPath;
+                    sPath = Node.NodeName + "/" + sPath;
                 }
                 else
                 {
-                    sPath = Node.NodeName + "//" + sPath;
+                    sPath = Node.NodeName + "/" + sPath;
                     sPath = WritePath(NewNode, sPath, user);
                 }
             }

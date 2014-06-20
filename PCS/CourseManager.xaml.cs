@@ -20,7 +20,7 @@ namespace PCS
     public partial class CourseManager : Window
     {
         public UserModel user = new UserModel();
-        private TreeViewItem item = new TreeViewItem();
+        private ObservableCollection<NodeModel> items = new ObservableCollection<NodeModel>();
         public CourseManager()
         {
             InitializeComponent();
@@ -42,6 +42,7 @@ namespace PCS
                 addpznr.user = user;
                 addpznr.ShowDialog();
             }
+            UserName.Content =UserName.Content + user.ZWXM;
 
         }
         /// <summary>
@@ -76,7 +77,9 @@ namespace PCS
             sPath = sPath + "//" + FB.WritePath(Node, "", user);
             NB.DeleteNode(Node, user);
             Directory.Delete(sPath);
-            ShowTree(treev);
+            NodeModel NewNode = NB.GetFatherNode2(items, Node);
+            NewNode.Nodes.Remove(Node);
+            //ShowTree(treev);
         }
 
         /// <summary>
@@ -127,11 +130,11 @@ namespace PCS
             Node.FolderPath = sPath;
             af.user = user;
             af.node = Node;
+            af.treev = treev;
             af.ShowDialog();
-            ShowTree(treev);
         }
         /// <summary>
-        /// 同步目录
+        /// 刷新目录
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -147,14 +150,20 @@ namespace PCS
         private void MenuItem_Click_5(object sender, RoutedEventArgs e)
         {
             NodeModel Node = treev.SelectedItem as NodeModel;
+            NodeBLL NB=new NodeBLL();
+            SQLiteBLL sqlite = new SQLiteBLL();
+            string sSql = string.Format("select * from yh_pzb where pzmc='文件夹本地地址' and yh_guid={0}", user.YH_GUID);
+            DataTable dt = sqlite.GetTable(sSql);
+            string sPath = dt.Rows[0]["PZNRZ"].ToString();
             ReName rn = new ReName();
             rn.user = user;
             rn.node = Node;
+            rn.sPath = sPath;
+            rn.items = items;
             rn.ShowDialog();
-            SQLiteBLL sqlite = new SQLiteBLL();
-            NodeBLL NB = new NodeBLL();
-            //添加树形目录数据
-            ShowTree(treev);
+        
+            ////添加树形目录数据
+            //ShowTree(treev);
         }
 
         private void treev_Loaded(object sender, RoutedEventArgs e)
@@ -164,6 +173,7 @@ namespace PCS
             FileBLL FB = new FileBLL();
             //添加树形目录数据
             ObservableCollection<NodeModel> NodeList = ShowTree(treev);
+            items = NodeList;
             //创建本地文件夹
             string sSql = string.Format("select * from yh_pzb where pzmc='文件夹本地地址' and yh_guid={0}", user.YH_GUID);
             DataTable dt = sqlite.GetTable(sSql);
@@ -233,6 +243,34 @@ namespace PCS
             {
                 Listv.UnselectAll();
             }
+        }
+        /// <summary>
+        /// 资源 编辑
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            FileInfomation File = Listv.SelectedItem as FileInfomation;
+            ReName rn = new ReName();
+            rn.fileinf = File;
+            rn.user = user;
+            rn.ShowDialog();
+            ShowList(treev, user, Listv);
+        }
+        /// <summary>
+        /// 刷新资源列表
+        /// </summary>
+        /// <param name="treev"></param>
+        /// <param name="user"></param>
+        /// <param name="Listv"></param>
+        private void ShowList(TreeView treev, UserModel user, ListView Listv)
+        {
+            NodeModel node = treev.SelectedItem as NodeModel;
+            FileBLL fb = new FileBLL();
+            List<FileInfomation> FileList = new List<FileInfomation>();
+            FileList = fb.GetFileInfo(node, user.YH_GUID);
+            Listv.ItemsSource = FileList;
         }
     }
 }

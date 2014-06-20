@@ -13,7 +13,7 @@ namespace PCS.Model
         public NodeModel()
         {
             this.Nodes =new ObservableCollection<NodeModel>();
-            this.FJID = "0";
+            this.FJID = "-1";
         }
         public string NodeName { get; set; }
         public string ID { get; set; }
@@ -21,5 +21,6 @@ namespace PCS.Model
         public ObservableCollection<NodeModel> Nodes { get; set; }
         public string FolderPath { get; set; }
         public string changetime { get; set; }
+        public string MLBM { get; set; }
     }
 }

@@ -10,14 +10,15 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="106*"/>
+            <RowDefinition Height="31*"/>
+            <RowDefinition Height="76*"/>
             <RowDefinition Height="67*"/>
-            <RowDefinition Height="497*"/>
+            <RowDefinition Height="496*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TreeView x:Name="treev" HorizontalAlignment="Left" Height="488" VerticalAlignment="Top" Width="180" SelectedItemChanged="treev_SelectedItemChanged" MouseRightButtonDown="item1_MouseRightButtonDown_1" Loaded="treev_Loaded" FontStretch="SemiExpanded" Grid.Row="2">
+        <TreeView x:Name="treev" HorizontalAlignment="Left" Height="488" VerticalAlignment="Top" Width="180" SelectedItemChanged="treev_SelectedItemChanged" MouseRightButtonDown="item1_MouseRightButtonDown_1" Loaded="treev_Loaded" FontStretch="SemiExpanded" Grid.Row="3" >
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="False"></Setter>
@@ -37,20 +38,20 @@
                     <MenuItem Header="添加系统目录" Click="MenuItem_Click_2"></MenuItem>
                     <MenuItem Header="删除目录" Click="MenuItem_Click_1"></MenuItem>
                     <MenuItem Header="添加用户目录" Click="MenuItem_Click_3"></MenuItem>
-                    <MenuItem Header="同步目录" Click="MenuItem_Click_4"></MenuItem>
+                    <MenuItem Header="同步目录" ></MenuItem>
                     <MenuItem Header="编辑目录" Click="MenuItem_Click_5"></MenuItem>
                     <MenuItem Header="目录权限"></MenuItem>
                     <MenuItem Header="剪切目录"></MenuItem>
                     <MenuItem Header="复制目录"></MenuItem>
-                    <MenuItem Header="刷新目录"></MenuItem>
+                    <MenuItem Header="刷新目录" Click="MenuItem_Click_4"></MenuItem>
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>
 
-        <ListView HorizontalAlignment="Left" Height="488" Margin="185,0,-3,0" VerticalAlignment="Top" Width="790" Name="Listv" Grid.Row="2">
+        <ListView HorizontalAlignment="Left" Height="488" Margin="185,4,-3,0" VerticalAlignment="Top" Width="790" Name="Listv" Grid.Row="3" >
             <ListView.View>
                 <GridView>
-                     <GridView.Columns>
+                    <GridView.Columns>
                         <GridViewColumn Width="25" CellTemplate="{StaticResource ResourceKey=AutoReleaseTemplate}">
                             <GridViewColumn.Header>
                                 <CheckBox Click="CheckBox_Click_1" Name="AllCheck"></CheckBox>
@@ -84,63 +85,51 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <StackPanel Orientation="Horizontal" Width="179">
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" Width="180" >
                 <StackPanel Width="44">
-                    <Button Background="Transparent" BorderBrush="Transparent">
-                        <Image Source="Resource/up向上.gif" Width="32" Height="32"/>
+                    <Button Background="Transparent" BorderBrush="Transparent" Click="MenuItem_Click_3">
+                        <Image Source="Resource/new_folder新目录.gif" Width="32" Height="32"/>
                     </Button>
-                    <Label Content="向上" Width="32" Height="26" Margin="6,0"/>
+                    <Label Content="添加" Width="32" Height="26" Margin="6,0"/>
                 </StackPanel>
                 <StackPanel Width="44">
-                    <Button Background="Transparent" BorderBrush="Transparent">
-                        <Image Source="Resource/home根目录.gif" Width="32" Height="32"/>
+                    <Button Background="Transparent" BorderBrush="Transparent" Click="MenuItem_Click_5">
+                        <Image Source="Resource/编辑文件夹.png" Width="30" Height="30"/>
                     </Button>
-                    <Label Content="根目录" Height="26" Margin="0,0,-3,0"/>
+                    <Label Content="编辑" Height="26" Margin="3,0,-6,0"/>
                 </StackPanel>
                 <StackPanel Width="44">
-                    <Button Background="Transparent" BorderBrush="Transparent">
+                    <Button Background="Transparent" BorderBrush="Transparent" Click="MenuItem_Click_1">
+                        <Image Source="Resource/delete_big.gif" Width="32" Height="32"/>
+                    </Button>
+                    <Label Content="删除" Height="26" Margin="6,0,-9,0"/>
+                </StackPanel>
+                <StackPanel Width="44">
+                    <Button Background="Transparent" BorderBrush="Transparent" Click="MenuItem_Click_4">
                         <Image Source="Resource/fs_refresh刷新.gif" Width="32" Height="32"/>
                     </Button>
                     <Label Content="刷新" Width="32" Height="26"/>
-                </StackPanel>
-                <StackPanel Width="44">
-                    <Button Background="Transparent" BorderBrush="Transparent">
-                        <Image Source="Resource/new_folder新目录.gif" Width="32" Height="32"/>
-                    </Button>
-                    <Label Content="新目录" Height="26" Margin="0,0,-3,0"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Width="6"></StackPanel>
             <StackPanel Width="55">
                 <Button Background="Transparent" BorderBrush="Transparent">
-                    <Image Source="Resource/up向上.gif" Width="32" Height="32"/>
+                    <Image Source="Resource/upload上传.gif" Width="32" Height="32"/>
                 </Button>
-                <Label Content="向上" Height="26" Margin="10,0,1,0"/>
+                <Label Content="上传" Height="26" Margin="10,0,-13,0"/>
             </StackPanel>
             <StackPanel Width="55">
-                <Button Background="Transparent" BorderBrush="Transparent">
-                    <Image Source="Resource/home根目录.gif" Width="32" Height="32"/>
+                <Button Background="Transparent" BorderBrush="Transparent" Click="Button_Click_1">
+                    <Image Source="Resource/rename_btn[1].gif" Width="32" Height="32"/>
                 </Button>
-                <Label Content="根目录" Height="26" Margin="8,0,0,0"/>
-            </StackPanel>
-            <StackPanel Width="55">
-                <Button Background="Transparent" BorderBrush="Transparent">
-                    <Image Source="Resource/fs_refresh刷新.gif" Width="32" Height="32"/>
-                </Button>
-                <Label Content="刷新" Height="26" Margin="14,0,0,0"/>
-            </StackPanel>
-            <StackPanel Width="55">
-                <Button Background="Transparent" BorderBrush="Transparent">
-                    <Image Source="Resource/new_folder新目录.gif" Width="32" Height="32"/>
-                </Button>
-                <Label Content="新目录" Height="26" Margin="6,0,-9,0"/>
+                <Label Content="编辑" Height="26" Margin="6,0,5,0"/>
             </StackPanel>
             <StackPanel Width="55">
                 <Button Background="Transparent" BorderBrush="Transparent">
                     <Image Source="Resource/delete_big.gif" Width="32" Height="32"/>
                 </Button>
-                <Label Content="删除" Height="26" Margin="10,0,1,0"/>
+                <Label Content="删除" Height="26" Margin="11,0,0,0"/>
             </StackPanel>
             <StackPanel Width="55">
                 <Button Background="Transparent" BorderBrush="Transparent">
@@ -156,21 +145,15 @@
             </StackPanel>
             <StackPanel Width="55">
                 <Button Background="Transparent" BorderBrush="Transparent">
-                    <Image Source="Resource/ab_search.gif" Width="32" Height="32"/>
+                    <Image Source="Resource/sharing共享.gif" Width="32" Height="32"/>
                 </Button>
-                <Label Content="搜索" Height="26" Margin="10,0,-13,0"/>
+                <Label Content="共享" Height="26" Margin="11,0,3,0"/>
             </StackPanel>
             <StackPanel Width="55">
                 <Button Background="Transparent" BorderBrush="Transparent">
-                    <Image Source="Resource/spic缩略图.gif" Width="32" Height="32"/>
+                    <Image Source="Resource/home根目录.gif" Width="32" Height="32"/>
                 </Button>
-                <Label Content="缩略图" Height="26" Margin="6,0,-9,0"/>
-            </StackPanel>
-            <StackPanel Width="55">
-                <Button Background="Transparent" BorderBrush="Transparent">
-                    <Image Source="Resource/upload上传.gif" Width="32" Height="32"/>
-                </Button>
-                <Label Content="上传" Height="26" Margin="10,0,-13,0"/>
+                <Label Content="插入" Height="26" Margin="11,0,-3,0"/>
             </StackPanel>
             <StackPanel Width="55">
                 <Button Background="Transparent" BorderBrush="Transparent">
@@ -180,13 +163,9 @@
             </StackPanel>
             <StackPanel Width="55">
                 <Button Background="Transparent" BorderBrush="Transparent">
-                    <Image Source="Resource/send转发.gif" Width="32" Height="32"/>
+                    <Image Source="Resource/sharing共享.gif" Width="32" Height="32"/>
                 </Button>
-                <Label Content="转发" Height="26" Margin="14,0,-17,0"/>
-            </StackPanel>
-            <StackPanel Width="55">
-                <Image Source="Resource/sharing共享.gif" Width="32" Height="32"/>
-                <Label Content="共享" Height="26" Margin="12,0,-15,0"/>
+                <Label Content="分享" Height="26" Margin="12,0,-15,0"/>
             </StackPanel>
             <StackPanel Width="55">
                 <Button Background="Transparent" BorderBrush="Transparent">
@@ -194,10 +173,94 @@
                 </Button>
                 <Label Content="发布" Height="26" Margin="12,0,-15,0"/>
             </StackPanel>
+            <StackPanel Width="55">
+                <Button Background="Transparent" BorderBrush="Transparent">
+                    <Image Source="Resource/new_folder新目录.gif" Width="32" Height="32"/>
+                </Button>
+                <Label Content="推送" Height="26" Margin="6,0,-9,0"/>
+            </StackPanel>
+            <StackPanel Width="55">
+                <Button Background="Transparent" BorderBrush="Transparent">
+                    <Image Source="Resource/spic缩略图.gif" Width="32" Height="32"/>
+                </Button>
+                <Label Content="课例相关" Height="26" Margin="1,0,-4,0"/>
+            </StackPanel>
+            <StackPanel Width="55">
+                <Button Background="Transparent" BorderBrush="Transparent">
+                    <Image Source="Resource/ab_search.gif" Width="32" Height="32"/>
+                </Button>
+                <Label Content="视频编辑" Height="26" Margin="-1,0,-2,0"/>
+            </StackPanel>
+            <StackPanel Width="55">
+                <Button Background="Transparent" BorderBrush="Transparent">
+                    <Image Source="Resource/send转发.gif" Width="32" Height="32"/>
+                </Button>
+                <Label Content="图书编目" Height="26" Margin="4,0,-7,0"/>
+            </StackPanel>
         </StackPanel>
 
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.RowSpan="1">
+            <StackPanel Width="180">
+                <Image Source="Resource/TitlePicture.png" Height="75" HorizontalAlignment="Left" Width="180"></Image>
+            </StackPanel>
+            <StackPanel Width="793">
+                <StackPanel Height="35" Orientation="Horizontal">
+                    <StackPanel Width="204" Height="30" HorizontalAlignment="Left" Margin="0,2,0,3">
+                    </StackPanel>
+                    <StackPanel Width="50" Height="30" HorizontalAlignment="Left">
+                        <Label Content="全部" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
+                    </StackPanel>
+                    <StackPanel Width="50" Height="30" HorizontalAlignment="Left">
+                        <Label Content="课程" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"></Label>
+                    </StackPanel>
+                    <StackPanel Width="50" Height="30" HorizontalAlignment="Left">
+                        <Label Content="专题" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"></Label>
+                    </StackPanel>
+                    <StackPanel Width="50" Height="30" HorizontalAlignment="Left">
+                        <Label Content="视频" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"></Label>
+                    </StackPanel>
+                    <StackPanel Width="50" Height="30" HorizontalAlignment="Left">
+                        <Label Content="图书" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"></Label>
+                    </StackPanel>
+                    <StackPanel Width="50" Height="30" HorizontalAlignment="Left">
+                        <Label Content="光盘" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"></Label>
+                    </StackPanel>
+                    <StackPanel Width="50" Height="30" HorizontalAlignment="Left">
+                        <Label Content="素材" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"></Label>
+                    </StackPanel>
+                    <StackPanel Width="50" Height="30" HorizontalAlignment="Left">
+                        <Label Content="资讯" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"></Label>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel  Height="30" Orientation="Horizontal">
+                    <StackPanel Width="200">
+                        <ComboBox Background="White" Height="24" VerticalAlignment="Top"  FontSize="14" HorizontalAlignment="Right" Width="67">
+                            <ComboBoxItem Content="全部" FontSize="14"/>
+                            <ComboBoxItem Content="教案" FontSize="14"/>
+                            <ComboBoxItem Content="课件" FontSize="14"/>
+                            <ComboBoxItem Content="课例" FontSize="14"/>
+                            <ComboBoxItem Content="评价" FontSize="14"/>
+                            <ComboBoxItem Content="素材" FontSize="14"/>
+                            <ComboBoxItem Content="文献" FontSize="14"/>
+                            <ComboBoxItem Content="其他" FontSize="14"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Width="11" Height="35"/>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBox Width="392" Height="27" FontSize="12"/>
+                    </StackPanel>
+                    <StackPanel Width="11" Height="35"/>
+                    <StackPanel>
+                        <Button Content="搜索一下" Height="24" FontSize="14"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+        </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <StackPanel Width="180"></StackPanel>
+            <StackPanel Width="180">
+                <Label Content="欢迎:" Name="UserName" FontSize="16" FontWeight="Bold"></Label>
+            </StackPanel>
         </StackPanel>
         <!--<Menu HorizontalAlignment="Left" Height="43" VerticalAlignment="Top" Width="972">
             <MenuItem Header="_操作" Height="43" FontSize="24">

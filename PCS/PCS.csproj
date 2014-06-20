@@ -239,6 +239,15 @@
     <Resource Include="Resource\up向上.gif" />
     <Resource Include="Resource\zip压缩.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\rename_btn[1].gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\TitlePicture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\编辑文件夹.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

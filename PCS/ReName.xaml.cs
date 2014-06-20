@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace PCS
 {
@@ -23,6 +25,8 @@ namespace PCS
     {
         public UserModel user = new UserModel();
         public NodeModel node = new NodeModel();
+        public ObservableCollection<NodeModel> items = new ObservableCollection<NodeModel>();
+        public string sPath=string.Empty;
         public FileInfomation fileinf = new FileInfomation();
         int i;//判断是重命名文件还是目录的标示
         public ReName()
@@ -51,19 +55,29 @@ namespace PCS
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             SQLiteBLL sqlite = new SQLiteBLL();
+            NodeBLL NB = new NodeBLL();
+            FileBLL FB = new FileBLL();
             string sSql = string.Empty;
             if (i == 0)
             {
-                sSql = string.Format("update yh_bdml set MLBTMC='{0}',GXSJ=(select datetime('now','localtime')) where yh_guid='{1}' and mlbm='{2}'", Namebox.Text, user.YH_GUID, node.ID);
+                sSql = string.Format("update yh_bdml set MLBTMC='{0}',GXSJ=(select datetime('now','localtime')) where yh_guid='{1}' and ml_id='{2}'", Namebox.Text, user.YH_GUID, node.ID);
                 sqlite.ExecuteSql(sSql);
-                MessageBox.Show("重命名成功!");
+                string sPath1 = string.Empty;               
+                sPath1 = FB.WritePath(node, sPath1, user);
+                node.FolderPath =sPath+"//"+sPath1;
+                DirectoryInfo di = new DirectoryInfo(node.FolderPath);
+                string sPath2 = di.Parent.FullName + "/" + Namebox.Text;
+                Directory.Move(node.FolderPath, sPath2);
+                NodeModel NewNode = NB.GetFatherNode2(items, node);
+                NewNode.Nodes.Remove(node);
+                node.NodeName = Namebox.Text;
+                NewNode.Nodes.Add(node);
                 this.Close();
             }
             else
             {
-                sSql = string.Format("update yh_bdml set TITLE='{0}',GXSJ=(select datetime('now','localtime')) where yh_guid='{1}' and yhzy_id='{2}'", Namebox.Text, user.YH_GUID, fileinf.YHZY_ID);
+                sSql = string.Format("update yh_bdwj set TITLE='{0}',GXSJ=(select datetime('now','localtime')) where yh_guid='{1}' and yhzy_id='{2}'", Namebox.Text, user.YH_GUID, fileinf.YHZY_ID);
                 sqlite.ExecuteSql(sSql);
-                MessageBox.Show("重命名成功!");
                 this.Close();
             }
         }

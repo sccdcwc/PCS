@@ -25,6 +25,7 @@ namespace PCS.BLL
                     Node.ID = dt.Rows[i]["ML_ID"].ToString();
                     Node.FJID = dt.Rows[i]["FJMLID"].ToString();
                     Node.changetime = dt.Rows[i]["GXSJ"].ToString();
+                    Node.MLBM = dt.Rows[i]["MLBM"].ToString();
                     DataTable zdt = new DataTable();
                     string sSql = string.Format("select * from yh_bdml where FJMLID='{0}' and yh_guid='{1}' and qyzt='1' order by ML_ID", dt.Rows[i]["ML_ID"], dt.Rows[i]["YH_GUID"]);
                     zdt = sqlite.GetTable(sSql);
@@ -76,7 +77,7 @@ namespace PCS.BLL
 
         public void DeleteNode(NodeModel Node, UserModel user)
         {
-            string sSql = string.Format("update yh_bdml set qyzt='0',GXSJ=(select datetime('now','localtime')) where yh_guid='{0}' and mlbm='{1}'", user.YH_GUID, Node.ID);
+            string sSql = string.Format("update yh_bdml set qyzt='0',GXSJ=(select datetime('now','localtime')) where yh_guid='{0}' and ml_id='{1}'", user.YH_GUID, Node.ID);
             sqlite.ExecuteSql(sSql);
         }
 
@@ -95,6 +96,30 @@ namespace PCS.BLL
             else
                 NewNode = null;
             return NewNode;
+        }
+
+        public NodeModel GetFatherNode2(ObservableCollection<NodeModel> INodes, NodeModel Node)
+        {
+            NodeModel NewNode = new NodeModel();
+            if (INodes.Count > 0)
+            {
+                for (int i = 0; i < INodes.Count; i++)
+                {
+                    if (Node.FJID == INodes[i].ID)
+                    {
+                        NewNode = INodes[i];
+                        return NewNode;
+                    }
+                    else
+                    {
+                        NewNode = GetFatherNode2(INodes[i].Nodes, Node);
+                        if (NewNode.NodeName != null)
+                            break;
+                    }
+                }
+            }
+            return NewNode;
+
         }
     }
 }
